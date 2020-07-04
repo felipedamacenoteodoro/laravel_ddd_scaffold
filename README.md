@@ -34,7 +34,7 @@ Exec Docker Compose
 docker-compose up -d
 ```
 
-Enter in php-fpm container
+Enter the app container
 ```
 docker-compose exec app bash
 ```
@@ -42,7 +42,6 @@ docker-compose exec app bash
 Install Depencencies
 ```
 composer install
-npm install
 ```
 
 Generate key
@@ -71,11 +70,6 @@ cp .env.example .env
 Generate APP_KEY
 ```
 php artisan key:generate
-```
-
-Generate symbolic link to Storage
-```
-php artisan storage:link
 ```
 
 If you are in production
@@ -126,4 +120,4 @@ The © License 2020 - Felipe D. Teodoro.
 
 ---
 
-> Developed with :bulb: :headphones: :beer: by [@felipedamacenoteodoro](https://www.linkedin.com/in/felipedamacenoteodoro)
+> Developed with :bulb: :headphones: :coffee: by [@felipedamacenoteodoro](https://www.linkedin.com/in/felipedamacenoteodoro)
