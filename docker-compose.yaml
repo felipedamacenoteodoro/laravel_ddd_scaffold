@@ -1,0 +1,57 @@
+version: '3'
+
+services:
+
+    app:
+        build: .
+        container_name: ${APP_NAME}-app
+        user: 1000:1000
+        volumes:
+           - .:/var/www
+        networks:
+          - app-network
+        depends_on:
+            - mysql
+            - redis
+
+    nginx:
+        build: .docker/nginx
+        container_name: ${APP_NAME}-nginx
+        restart: always
+        tty: true
+        ports:
+          - "8000:80"
+        volumes:
+          - .:/var/www
+        networks:
+          - app-network
+        depends_on:
+          - app
+
+    mysql:
+        image: mysql:5.7
+        command: --innodb-use-native-aio=0
+        container_name: ${APP_NAME}-mysql
+        restart: always
+        tty: true
+        ports:
+          - "3307:3306"
+        volumes:
+          - ./.docker/dbdata:/var/lib/mysql
+        environment:
+          - MYSQL_DATABASE=${APP_NAME}_app
+          - MYSQL_ROOT_PASSWORD=root
+          - MYSQL_USER=root
+        networks:
+          - app-network
+
+    redis:
+        image: redis:alpine
+        expose:
+          - 6379
+        networks:
+          - app-network
+
+networks:
+  app-network:
+    driver: bridge
